@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 # Configuration et installation des extensions PHP
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype \
     && docker-php-ext-install -j$(nproc) gd pdo_mysql mbstring exif bcmath zip
-
+RUN touch database/database.sqlite
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
