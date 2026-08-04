@@ -1,3 +1,15 @@
+# ---- Étape 1 : build des assets front avec Node ----
+FROM node:20-alpine AS node-build
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+RUN npm run build
+
+# ---- Étape 2 : image PHP finale ----
 FROM php:8.2-cli
 
 RUN apt-get update && apt-get install -y \
@@ -19,8 +31,14 @@ WORKDIR /app
 
 COPY . .
 
+# Récupère les assets compilés depuis l'étape Node
+COPY --from=node-build /app/public/build /app/public/build
+
 RUN mkdir -p database && touch database/database.sqlite
 
 RUN composer install --optimize-autoloader --no-dev --no-interaction
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
+CMD ["/app/start.sh"]
