@@ -51,7 +51,7 @@ class RegisteredUserController extends Controller
                 'expires_at' => now()->addHours(48),
             ]);
 
-            Mail::to($user->email)->send(new AccountActivationMail($token));
+            Mail::to($user->email)->queue(new AccountActivationMail($token));
 
             return redirect()->route('login')->with('status', 'Votre compte syndic a été créé avec succès. Vérifiez votre email pour l’activation.');
         });
