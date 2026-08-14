@@ -42,7 +42,7 @@ class InvitationService
         $invitation = OwnerInvitation::create($invitationData);
 
         if ($invitation->email) {
-            Mail::to($invitation->email)->send(new AccountActivationMail($token));
+           Mail::to($invitation->email)->queue(new AccountActivationMail($token));
         }
 
         return ['invitation' => $invitation, 'raw_token' => $token];
