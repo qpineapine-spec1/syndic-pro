@@ -15,6 +15,8 @@
         "symfony/clock": "^7.4",
         "symfony/css-selector": "^7.4",
         "symfony/event-dispatcher": "^7.4",
+        "symfony/http-client": "^7.4",
+        "symfony/resend-mailer": "^7.4",
         "symfony/routing": "^7.4",
         "symfony/string": "^7.4",
         "symfony/translation": "^7.4",
@@ -94,3 +96,4 @@
     "minimum-stability": "stable",
     "prefer-stable": true
 }
+
